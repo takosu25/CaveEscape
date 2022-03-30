@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
 
-public class CEPlayer implements Listener{
+public abstract class CEPlayer implements Listener{
 	Player player;
 	Plugin plugin;
 	CEGame ceg;
