@@ -25,8 +25,8 @@ public class CEGame implements Listener{
 	private Vector[] spawnCave = {new Vector(18, -60, 63), new Vector(18, -60, 59), new Vector(18, -60, 67)};
 	private HashMap<Player, CEPlayer> playerData = new HashMap<Player, CEPlayer>();
 	Player master;
-	private Vector[] spawnDiamond = {new Vector(40, -60, 10), new Vector(15, -60, 25), new Vector(10, -60, 15)};
-	private Vector[] spawnFurnace = {new Vector(35, -60, 15), new Vector(20, -60, 10), new Vector(15, -60, 10), new Vector(10, -60, 20)};
+	private Vector[] spawnDiamond = {new Vector(27, -60, 35), new Vector(57, -59, 22), new Vector(89, -60, 28), new Vector(86, -60, 82), new Vector(70, -60, 93), new Vector(57, -60, 103)};
+	private Vector[] spawnFurnace = {new Vector(39, -60, 73), new Vector(72, -60, 87), new Vector(86, -60, 53), new Vector(47, -60, 48), new Vector(50, -60, 29), new Vector(30, -60, 103), new Vector(95, -60, 91)};
 	private Vector[] spawnPrison = {new Vector(65, -60, 9), new Vector(104, -60, 60), new Vector(59, -60, 115)};
 	
 	
@@ -38,6 +38,12 @@ public class CEGame implements Listener{
 	}
 	
 	public void start() {
+		for(Vector v :spawnDiamond) {
+			v.toLocation(world).getBlock().setType(Material.AIR);
+		}
+		for(Vector v :spawnFurnace) {
+			v.toLocation(world).getBlock().setType(Material.AIR);
+		}
 		Collections.shuffle(players);
 		master = players.get(0);
 		Random rnd = new Random();
