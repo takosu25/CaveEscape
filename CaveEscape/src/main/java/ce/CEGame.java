@@ -33,7 +33,7 @@ public class CEGame implements Listener{
 	private Vector[] spawnFurnace = {new Vector(39, -60, 73), new Vector(72, -60, 87), new Vector(86, -60, 53), new Vector(47, -60, 48), new Vector(50, -60, 29), new Vector(30, -60, 103), new Vector(95, -60, 91)};
 	private Vector[] spawnPrison = {new Vector(65, -60, 9), new Vector(104, -60, 60), new Vector(59, -60, 115)};
 	private Vector[] spawnObsidian = {new Vector(55.5, -60, 61.5), new Vector(54.5, -58, 61.5)};
-	
+	private Vector[] spawnWater = {new Vector(30, -60, 101)};
 	
 	
 	public CEGame(Plugin plugin) {
@@ -43,12 +43,9 @@ public class CEGame implements Listener{
 	}
 	
 	public void start() {
-		for(Vector v :spawnDiamond) {
-			v.toLocation(world).getBlock().setType(Material.AIR);
-		}
-		for(Vector v :spawnFurnace) {
-			v.toLocation(world).getBlock().setType(Material.AIR);
-		}
+		resetBlock(spawnDiamond);
+		resetBlock(spawnFurnace);
+		resetBlock(spawnWater);
 		Collections.shuffle(players);
 		master = players.get(0);
 		Random rnd = new Random();
@@ -62,6 +59,7 @@ public class CEGame implements Listener{
 		randomPut(3, rnd, spawnDiamond, Material.DIAMOND_ORE);
 		randomPut(4, rnd, spawnFurnace, Material.FURNACE);
 		randomPut(2, rnd, spawnObsidian, Material.CRYING_OBSIDIAN);
+		randomPut(1, rnd, spawnWater, Material.BARREL);
 	}
 	
 	/**
@@ -82,6 +80,11 @@ public class CEGame implements Listener{
 			index.add(x);
 			world.getBlockAt(locations[x].toLocation(world)).setType(m);
 			
+		}
+	}
+	void resetBlock(Vector[] location) {
+		for(Vector v :location) {
+			v.toLocation(world).getBlock().setType(Material.AIR);
 		}
 	}
 	//ダイヤモンド鉱石以外のブロック破壊禁止
@@ -123,7 +126,10 @@ public class CEGame implements Listener{
 			if(((CEMaster)playerData.get(master)).getCooldown()) {
 				((CEMiner)playerData.get(miner)).damage(20);
 				((CEMaster)playerData.get(master)).cooldown();
+				e.setDamage(0);
 			}
+		}else if(players.contains(e.getDamager()) && e.getDamager() != master) {
+			e.setCancelled(true);
 		}
 	}
 	
