@@ -2,7 +2,7 @@ name: CaveEscape
 version: 0.0.1
 main: ce.CEMain
 commands:
-  ma:
+  ce:
     description: Command no setumei
     usage: /<command>
     default: true
