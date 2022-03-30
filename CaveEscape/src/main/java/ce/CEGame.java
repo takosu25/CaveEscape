@@ -10,25 +10,31 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
-public class CEGame {
+public class CEGame implements Listener{
 	private List<Player> players = new ArrayList<Player>();
 	private World world;
 	Plugin plugin;
-	private Vector[] spawnMaster = {new Vector(0, -60, 30), new Vector(), new Vector()};
-	private Vector[] spawnCave = {new Vector(0, -60, 0), new Vector(10, -60, 10), new Vector(20, -60, 20)};
+	private Vector[] spawnMaster = {new Vector(65, -60, 17), new Vector(59, -60, 106), new Vector(96, -60, 60)};
+	private Vector[] spawnCave = {new Vector(18, -60, 63), new Vector(18, -60, 59), new Vector(18, -60, 67)};
 	private HashMap<Player, CEPlayer> playerData = new HashMap<Player, CEPlayer>();
 	Player master;
 	private Vector[] spawnDiamond = {new Vector(40, -60, 10), new Vector(15, -60, 25), new Vector(10, -60, 15)};
 	private Vector[] spawnFurnace = {new Vector(35, -60, 15), new Vector(20, -60, 10), new Vector(15, -60, 10), new Vector(10, -60, 20)};
+	private Vector[] spawnPrison = {new Vector(65, -60, 9), new Vector(104, -60, 60), new Vector(59, -60, 115)};
 	
 	
 	
 	public CEGame(Plugin plugin) {
 		world = Bukkit.getWorld("CEWorld");
 		this.plugin = plugin;
+		plugin.getServer().getPluginManager().registerEvents(this, plugin);
 	}
 	
 	public void start() {
@@ -66,6 +72,17 @@ public class CEGame {
 			
 		}
 	}
+	//ダイヤモンド鉱石以外のブロック破壊禁止
+	@EventHandler
+	public void onBlockBreak(BlockBreakEvent e) {
+		if(e.getBlock().getType() == Material.DIAMOND_ORE) {
+			e.setDropItems(false);
+			e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND_ORE));
+		}else {
+			e.setCancelled(true);
+		}
+	}
+	
 	
 	
 	
