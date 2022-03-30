@@ -13,6 +13,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityRegainHealthEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
@@ -28,6 +32,7 @@ public class CEGame implements Listener{
 	private Vector[] spawnDiamond = {new Vector(27, -60, 35), new Vector(57, -59, 22), new Vector(89, -60, 28), new Vector(86, -60, 82), new Vector(70, -60, 93), new Vector(57, -60, 103)};
 	private Vector[] spawnFurnace = {new Vector(39, -60, 73), new Vector(72, -60, 87), new Vector(86, -60, 53), new Vector(47, -60, 48), new Vector(50, -60, 29), new Vector(30, -60, 103), new Vector(95, -60, 91)};
 	private Vector[] spawnPrison = {new Vector(65, -60, 9), new Vector(104, -60, 60), new Vector(59, -60, 115)};
+	private Vector[] spawnObsidian = {new Vector(55.5, -60, 61.5), new Vector(54.5, -58, 61.5)};
 	
 	
 	
@@ -56,6 +61,7 @@ public class CEGame implements Listener{
 		//ダイヤモンドスポーン&かまどスポーン
 		randomPut(3, rnd, spawnDiamond, Material.DIAMOND_ORE);
 		randomPut(4, rnd, spawnFurnace, Material.FURNACE);
+		randomPut(2, rnd, spawnObsidian, Material.CRYING_OBSIDIAN);
 	}
 	
 	/**
@@ -88,7 +94,38 @@ public class CEGame implements Listener{
 			e.setCancelled(true);
 		}
 	}
-	
+	//食料ゲージ固定
+	@EventHandler
+	public void onFoodLevel(FoodLevelChangeEvent e) {
+		if(players.contains(e.getEntity())) {
+			e.setCancelled(true);
+		}
+	}
+	//ブロック設置禁止
+	@EventHandler
+	public void onBlockPlace(BlockPlaceEvent e) {
+		if(players.contains(e.getPlayer())) {
+			e.setCancelled(true);
+		}
+	}
+	//体力回復禁止
+	@EventHandler
+	public void onRegainHealth(EntityRegainHealthEvent e) {
+		if(players.contains(e.getEntity())){
+			e.setCancelled(true);
+		}
+	}
+	//殴った時の処理
+	@EventHandler
+	public void onTouch(EntityDamageByEntityEvent e) {
+		if(e.getDamager().equals(master) && players.contains(e.getEntity())) {
+			Player miner = (Player)e.getEntity();
+			if(((CEMaster)playerData.get(master)).getCooldown()) {
+				((CEMiner)playerData.get(miner)).damage(20);
+				((CEMaster)playerData.get(master)).cooldown();
+			}
+		}
+	}
 	
 	
 	

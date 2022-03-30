@@ -12,5 +12,12 @@ public class CEMiner extends CEPlayer {
 		player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
 		
 	}
+	public void damage(double damage) {
+		if(player.getHealth() - damage <= 0) {
+			
+		}else {
+			player.setHealth(player.getHealth() - damage);
+		}
+	}
 
 }
