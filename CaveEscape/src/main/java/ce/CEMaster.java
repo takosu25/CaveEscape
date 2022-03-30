@@ -1,5 +1,7 @@
 package ce;
 
+import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
@@ -28,6 +30,13 @@ public class CEMaster extends CEPlayer {
 	//getter&setter
 	public boolean getCooldown() {
 		return cooldown;
+	}
+	@Override
+	boolean rightClickBlock(Block block) {
+		if(block.getType() == Material.BARREL) {
+			return true;
+		}
+		return false;
 	}
 	
 

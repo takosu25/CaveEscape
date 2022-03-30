@@ -1,8 +1,13 @@
 package ce;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class CEMiner extends CEPlayer {
@@ -18,6 +23,25 @@ public class CEMiner extends CEPlayer {
 		}else {
 			player.setHealth(player.getHealth() - damage);
 		}
+	}
+	@Override
+	boolean rightClickBlock(Block block) {
+		if(block.getType() == Material.BARREL) {
+			if(!player.getInventory().contains(Material.BARREL)) {
+				ItemStack barrel = new ItemStack(Material.BARREL);
+				ItemMeta mbarrel = barrel.getItemMeta();
+				mbarrel.setDisplayName("水樽");
+				List<String> lore = new ArrayList<String>();
+				lore.add("水の入った樽");
+				lore.add("マグマを黒曜石にすることが出来る。");
+				lore.add("ヌシに当てることで減速を付与できる。");
+				mbarrel.setLore(lore);
+				barrel.setItemMeta(mbarrel);
+				player.getInventory().addItem(barrel);
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

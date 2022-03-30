@@ -87,13 +87,17 @@ public class CEGame implements Listener{
 			v.toLocation(world).getBlock().setType(Material.AIR);
 		}
 	}
-	//ダイヤモンド鉱石以外のブロック破壊禁止
+	//ダイヤモンド鉱石&泣く黒曜石以外のブロック破壊禁止
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		if(e.getBlock().getType() == Material.DIAMOND_ORE) {
 			e.setDropItems(false);
 			e.getPlayer().getInventory().addItem(new ItemStack(Material.DIAMOND_ORE));
 		}else {
+			if(e.getBlock().getType() == Material.CRYING_OBSIDIAN) {
+				e.setDropItems(false);
+				return;
+			}
 			e.setCancelled(true);
 		}
 	}
