@@ -48,7 +48,18 @@ public class CEBarrel {
 	}
 
 	void lavaToObsidian(Location l) {
-		l.getBlock().setType(Material.OBSIDIAN);
+		Material m = Material.OBSIDIAN;
+		Location c = l.clone();
+		c.add(0,-2,0);
+		if(c.getBlock().getType() == Material.BEDROCK) {
+			m = Material.CRYING_OBSIDIAN;
+		}else {
+			c.add(0,-1,0);
+			if(c.getBlock().getType() == Material.BEDROCK) {
+				m = Material.CRYING_OBSIDIAN;
+			}
+		}
+		l.getBlock().setType(m);
 		Vector[] vs = {new Vector(1,0,0),new Vector(-1,0,0),new Vector(0,1,0), new Vector(0,-1,0),new Vector(0,0,1),new Vector(0,0,-1)};
 		for(Vector v:vs) {
 			Location cl = l.clone();
