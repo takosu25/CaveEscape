@@ -14,6 +14,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
@@ -136,6 +137,11 @@ public class CEGame implements Listener{
 			e.setCancelled(true);
 		}
 	}
+	//樽の着地判定
+	@EventHandler
+	public void onChangeBlock(EntityChangeBlockEvent e) {
+		e.setCancelled(true);
+	}
 	
 	
 	
@@ -143,7 +149,7 @@ public class CEGame implements Listener{
 	
 	
 	
-	
+	//getter&setter
 	public List<Player> getPlayers(){
 		return players;
 	}
@@ -152,6 +158,9 @@ public class CEGame implements Listener{
 	}
 	public void addPlayers(Player player) {
 		players.add(player);
+	}
+	public Player getMaster() {
+		return master;
 	}
 
 }

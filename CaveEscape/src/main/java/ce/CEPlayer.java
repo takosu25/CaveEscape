@@ -38,8 +38,13 @@ public abstract class CEPlayer implements Listener{
 					return;
 				}
 			}
+			if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+				rightClickAll();
+			}
 		}
 	}
 	abstract boolean rightClickBlock(Block block);
+	
+	abstract void rightClickAll();
 
 }

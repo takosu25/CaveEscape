@@ -38,10 +38,22 @@ public class CEMiner extends CEPlayer {
 				mbarrel.setLore(lore);
 				barrel.setItemMeta(mbarrel);
 				player.getInventory().addItem(barrel);
-				return true;
+				
 			}
+			return true;
 		}
 		return false;
+	}
+	@Override
+	void rightClickAll() {
+		ItemStack item = player.getInventory().getItemInMainHand().clone();
+		int index = player.getInventory().getHeldItemSlot();
+		if(index == 0) {
+			
+		}else if(item.getType() == Material.BARREL) {
+			player.getInventory().setItem(index, null);
+			new CEBarrel(plugin, player, ceg);
+		}
 	}
 
 }

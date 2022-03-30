@@ -38,6 +38,11 @@ public class CEMaster extends CEPlayer {
 		}
 		return false;
 	}
+	@Override
+	void rightClickAll() {
+		// TODO 自動生成されたメソッド・スタブ
+		
+	}
 	
 
 }
