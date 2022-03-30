@@ -17,7 +17,7 @@ public class CEGame {
 	private List<Player> players = new ArrayList<Player>();
 	private World world;
 	Plugin plugin;
-	private Vector[] spawnMaster = {new Vector(), new Vector(), new Vector()};
+	private Vector[] spawnMaster = {new Vector(0, -60, 30), new Vector(), new Vector()};
 	private Vector[] spawnCave = {new Vector(0, -60, 0), new Vector(10, -60, 10), new Vector(20, -60, 20)};
 	private HashMap<Player, CEPlayer> playerData = new HashMap<Player, CEPlayer>();
 	Player master;
